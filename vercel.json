@@ -13,7 +13,13 @@
       }
     }
   ],
+  "functions": {
+    "server.ts": {
+      "includeFiles": "node_modules/docx-to-pdf-wasm/build/**/*.wasm"
+    }
+  },
   "routes": [
+    { "handle": "filesystem" },
     {
       "src": "/api/(.*)",
       "dest": "/server.ts"

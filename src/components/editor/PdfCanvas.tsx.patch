@@ -1,0 +1,13 @@
+@@ -101,6 +101,12 @@
+   const [isDrawing, setIsDrawing] = useState(false);
+   const [currentStroke, setCurrentStroke] = useState<DrawingPoint[]>([]);
+ 
++  useEffect(() => {
++    if (onUpdateFormValues) {
++      onUpdateFormValues(formValues);
++    }
++  }, [formValues, onUpdateFormValues]);
++
+   // Dragging state for moving existing elements
+   const [dragState, setDragState] = useState<{
+     elementId: string;

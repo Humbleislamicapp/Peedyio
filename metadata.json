@@ -1,0 +1,6 @@
+{
+  "name": "Peedy.io",
+  "description": "A modern, friendly PDF workspace and editor for editing, merging, splitting, compressing, comparing, signing, and annotating documents.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

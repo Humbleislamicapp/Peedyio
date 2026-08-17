@@ -1,0 +1,23 @@
+{
+  "entities": {
+    "user": {
+      "title": "User",
+      "description": "User profile and usage limits",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string" },
+        "exportsCount": { "type": "number" },
+        "lastExportDate": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["exportsCount"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": { "$ref": "#/entities/user" },
+      "description": "User profiles and limits"
+    }
+  }
+}

@@ -1,0 +1,35 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default deny all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() { return request.auth != null; }
+    function isOwner(userId) { return request.auth.uid == userId; }
+    function incoming() { return request.resource.data; }
+    function existing() { return resource.data; }
+    function isValidUser(data) {
+      return data.keys().hasAll(['exportsCount', 'updatedAt']) 
+             && data.exportsCount is number 
+             && data.updatedAt is timestamp;
+    }
+
+    // Users collection
+    match /users/{userId} {
+      allow read: if isSignedIn() && isOwner(userId);
+      
+      allow create: if isSignedIn() && isOwner(userId)
+                    && isValidUser(incoming())
+                    && incoming().createdAt == request.time
+                    && incoming().updatedAt == request.time;
+                    
+      allow update: if isSignedIn() && isOwner(userId)
+                    && isValidUser(incoming())
+                    && incoming().updatedAt == request.time
+                    && (incoming().diff(existing()).affectedKeys().hasOnly(['exportsCount', 'lastExportDate', 'updatedAt']));
+    }
+  }
+}
